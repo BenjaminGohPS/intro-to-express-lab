@@ -1,10 +1,5 @@
 const express = require("express");
 
-// /greetings/<username-parameter>
-
-/**
-Response: Include the username from the URL in the response, such as “Hello there, Christy!” or “What a delight it is to see you once more, Mathilda.” 
-*/
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -19,6 +14,23 @@ app.get("/roll/:numberParameter", (req, res) => {
     res.json(randomNumber);
   } else {
     res.json("You must specify a number.");
+  }
+});
+
+const collectibles = [
+  { name: "shiny ball", price: 5.95 },
+  { name: "autographed picture of a dog", price: 10 },
+  { name: "vintage 1970s yogurt SOLD AS-IS", price: 0.99 },
+];
+
+app.get("/collectibles/:index", (req, res) => {
+  const index = req.params.index;
+  if (index < collectibles.length) {
+    res.json(
+      `The ${collectibles[index].name} can be yours for ${collectibles[index].price}!`
+    );
+  } else {
+    res.json("This item is not yet in stock. Check back soon!");
   }
 });
 
